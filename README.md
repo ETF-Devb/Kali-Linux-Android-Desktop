@@ -1,58 +1,54 @@
 <h1 align="center">
-  <img src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/misc/transparent.png" height="15" width="0px"/>
-  🐉 Kali Linux XFCE4 Desktop on Android
-  <img src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/misc/transparent.png" height="15" width="0px"/>
+  Kali Linux XFCE4 Desktop Environment for Android
 </h1>
 
 <p align="center">
   <img src="https://img.shields.io/badge/OS-Kali%20NetHunter-c6a0f6?style=for-the-badge&logo=kalilinux&logoColor=363a4f&labelColor=363a4f" alt="Kali Linux" />
-  <img src="https://img.shields.io/badge/Platform-Android%20%7C%20Termux-8aadf4?style=for-the-badge&logo=android&logoColor=363a4f&labelColor=363a4f" alt="Android" />
-  <img src="https://img.shields.io/badge/GUI-XFCE4%20Desktop-a6da95?style=for-the-badge&logo=xfce&logoColor=363a4f&labelColor=363a4f" alt="XFCE" />
-  <img src="https://img.shields.io/badge/Theme-Catppuccin-f5a97f?style=for-the-badge&labelColor=363a4f" alt="Theme" />
+  <img src="https://img.shields.io/badge/Platform-Android%20%7C%20Termux-8aadf4?style=for-the-badge&logo=android&logoColor=363a4f&labelColor=363a4f" alt="Android Platform" />
+  <img src="https://img.shields.io/badge/GUI-XFCE4%20Desktop-a6da95?style=for-the-badge&logo=xfce&logoColor=363a4f&labelColor=363a4f" alt="XFCE4 GUI" />
+  <img src="https://img.shields.io/badge/Theme-Catppuccin%20Macchiato-f5a97f?style=for-the-badge&labelColor=363a4f" alt="Catppuccin Theme" />
+  <img src="https://img.shields.io/badge/Shell-Bash%20Scripting-ed8796?style=for-the-badge&logo=gnu-bash&logoColor=363a4f&labelColor=363a4f" alt="Bash" />
 </p>
 
 <p align="center">
-  A professional, hardware-accelerated <strong>Kali Linux XFCE4 Desktop</strong> deployment framework for Android via <strong>Termux-X11</strong>. Engineered with kernel-level phantom process limit bypasses, automated <code>systemd</code> bug patching, and an intelligent Bubblewrap (<code>bwrap</code>) sandbox wrapper for flawless GUI application execution.
+  An advanced, automated deployment framework for executing a hardware-accelerated <strong>Kali Linux XFCE4 Graphical Desktop</strong> natively on Android via <strong>Termux-X11</strong>. Engineered with kernel-level phantom process limit bypasses, systemd constraints patching, and an intelligent Bubblewrap (<code>bwrap</code>) sandbox wrapper for flawless application execution.
 </p>
 
 ---
 
-## `  SYSTEM `  ` 00 `  ` CORE DOWNLOADS & DEPENDENCIES ` 
+## 0. Core Dependencies & Architecture
 
-Before initiating the deployment protocol, you **must** install the official base environments below. Click the interactive powerline badges to download the latest builds directly:
+Before initiating the deployment protocol, ensure the environment meets the required architecture standards. Do not utilize Google Play Store builds, as they contain deprecated API configurations.
 
-<p align="center">
-  <a href="https://github.com/termux/termux-app/releases/latest" target="_blank">
-    <img src="https://img.shields.io/badge/1._DOWNLOAD-TERMUX_APP-8aadf4?style=for-the-badge&logo=termux&logoColor=363a4f&label=OFFICIAL%20F--DROID&labelColor=eff1f5" alt="Download Termux App" />
+<p align="left">
+  <a href="https://github.com/termux/termux-app/releases/latest">
+    <img src="https://img.shields.io/badge/1._TERMUX_APP-(F--Droid_Release)-8aadf4?style=for-the-badge&logo=termux&logoColor=363a4f&labelColor=363a4f" alt="Termux App" />
   </a>
-  <a href="https://github.com/termux/termux-x11/releases/latest" target="_blank">
-    <img src="https://img.shields.io/badge/2._DOWNLOAD-TERMUX__X11-a6da95?style=for-the-badge&logo=android&logoColor=363a4f&label=NIGHTLY%20BUILD&labelColor=8aadf4" alt="Download Termux X11" />
+  <a href="https://github.com/termux/termux-x11/releases/latest">
+    <img src="https://img.shields.io/badge/2._TERMUX--X11-(Nightly_Build)-c6a0f6?style=for-the-badge&logo=xorg&logoColor=363a4f&labelColor=363a4f" alt="Termux X11" />
   </a>
 </p>
 
-> [!WARNING]  
-> **DO NOT** download Termux from the Google Play Store. It is deprecated, unmaintained, and will cause dependency failures during installation.
-
 ---
 
-## `  KALI `  ` 01 `  ` ENVIRONMENT PREPARATION & BYPASS ` 
+## 1. Environment Preparation & Process Limit Bypass
 
-Initialize Termux repositories, install essential networking and X11 packages, and execute the Android 12+ Phantom Process Killer bypass to prevent system freezes during heavy compilation:
+Initialize Termux repositories, install essential networking and X11 packages, and execute the Android 12+ Phantom Process Killer bypass to prevent background session termination during high-load compilation.
 
 ```bash
 pkg update -y && pkg upgrade -y
 pkg install wget curl root-repo x11-repo termux-x11-nightly git -y
 
-# Disable Android Phantom Process Killer (Requires Root authorization for su)
+# Disable Android Phantom Process Killer (Requires superuser access)
 su -c "device_config put activity_manager max_phantom_processes 2147483647 && settings put global settings_enable_monitor_phantom_procs false"
 
 ```
 
 ---
 
-## ` KALI`  `02`  `AUTOMATED NETHUNTER DEPLOYMENT` 
+## 2. Automated NetHunter Deployment
 
-Fetch and execute the official Offensive Security NetHunter installer. During the interactive setup prompt, **select Option `2**` to deploy the full/minimal custom rootfs package:
+Fetch and execute the official Offensive Security NetHunter installer. During the interactive setup phase, input **Option `2**` to deploy the complete rootfs package.
 
 ```bash
 wget -O install-nethunter-termux [https://offs.ec/2MceZWr](https://offs.ec/2MceZWr)
@@ -63,9 +59,9 @@ chmod +x install-nethunter-termux
 
 ---
 
-## ` KALI`  `03`  `CHROOT CONFIGURATION & BWRAP PATCH` 
+## 3. Internal Chroot Configuration & Security Patching
 
-Execute the following block to enter the Kali Linux root environment automatically, configure DNS resolution, patch systemd installation constraints, install the XFCE4 desktop, and deploy an intelligent `bwrap` interceptor (allowing Chromium and VS Code to run without sandbox crashes):
+Inject automated configurations directly into the Kali Linux chroot environment. This stage handles DNS resolution, bypasses `systemd` package installation blocks, installs the XFCE4 desktop environment, and deploys a custom `bwrap` execution handler to enable Chromium and VS Code execution without standard kernel sandboxing failures.
 
 ```bash
 nh -r -c "bash -s" << 'EOF'
@@ -73,7 +69,7 @@ nh -r -c "bash -s" << 'EOF'
 echo "nameserver 8.8.8.8" > /etc/resolv.conf
 apt update && apt upgrade -y
 
-# Bypass systemd post-installation dependency locks
+# Bypass systemd post-installation dependency errors
 echo '#!/bin/sh' > /var/lib/dpkg/info/systemd.postinst
 echo 'exit 0' >> /var/lib/dpkg/info/systemd.postinst
 chmod +x /var/lib/dpkg/info/systemd.postinst
@@ -81,10 +77,10 @@ dpkg --configure systemd
 dpkg --configure -a
 apt --fix-broken install -y && apt upgrade -y
 
-# Install Desktop Environment, DBus, Audio server & Terminal
+# Deploy XFCE4 Desktop, DBus, Audio server, and Terminal
 apt install xfce4 xfce4-goodies dbus-x11 pulseaudio xfce4-terminal -y
 
-# Deploy Intelligent Bubblewrap (bwrap) Sandbox Interceptor
+# Deploy Intelligent Bubblewrap (bwrap) Interceptor
 rm -f /usr/bin/bwrap
 cat << 'BWRAP_EOF' > /usr/bin/bwrap
 #!/bin/bash
@@ -114,7 +110,7 @@ done
 BWRAP_EOF
 chmod +x /usr/bin/bwrap
 
-# Deploy Official Kali Themes, Menus & Security Meta-Packages
+# Install Official Kali Themes, Menu Systems, and Security Meta-Packages
 apt install kali-themes kali-wallpapers -y
 apt update && apt install kali-menu -y
 apt install kali-tools-top10 kali-tools-vulnerability-analysis kali-tools-information-gathering -y
@@ -124,9 +120,9 @@ EOF
 
 ---
 
-## ` KALI`  `04`  `EXECUTION SHORTCUT GENERATION` 
+## 4. Execution Shortcut Generation
 
-Create a global executable command (`start-kali`) in Termux to automate background cleanup, initialize the X11 TCP display server, and launch the XFCE4 session with LLVMpipe rendering:
+Generate a global execution script within the Termux binary directory (`start-kali`) to automate the cleanup of stale processes, initialize the X11 TCP socket, and launch the XFCE4 desktop session with LLVMpipe software rendering.
 
 ```bash
 cat << 'EOF' > $PREFIX/bin/start-kali
@@ -142,12 +138,12 @@ chmod +x $PREFIX/bin/start-kali
 
 ---
 
-## ` EXEC`  `05`  `SYSTEM LAUNCH PROTOCOL` 
+## 5. System Execution Protocol
 
-To boot into your Kali Linux Graphical Workspace, follow this simple two-step sequence:
+To launch the GUI workspace, adhere strictly to the following execution sequence:
 
-1. Open the **Termux-X11** app on your Android device and leave it running in the background.
-2. Return to your **Termux** terminal interface and execute:
+1. Launch the **Termux-X11** application and keep it running in the background.
+2. Return to the **Termux** terminal interface and execute:
 
 ```bash
 start-kali
@@ -156,9 +152,9 @@ start-kali
 
 ---
 
-## ` EXEC`  `06`  `PROCESS TERMINATION & KILL SWITCH` 
+## 6. Process Termination & Clean Exit
 
-To safely detach from the desktop workspace, kill all active X-Server display daemons, terminate background audio services, and unmount the filesystem cleanly:
+To safely detach from the desktop session, kill all active X-Server daemons, terminate audio services, and unmount the filesystem:
 
 ```bash
 pkill -9 -f termux-x11 && pkill -9 -f dbus-launch && pkill -9 -f xfce4
@@ -167,22 +163,19 @@ pkill -9 -f termux-x11 && pkill -9 -f dbus-launch && pkill -9 -f xfce4
 
 ---
 
-## ` WARN`  `07`  `COMPLETE UNINSTALLATION PROTOCOL` 
+## 7. Complete System Uninstallation
 
-> [!CAUTION]
-> Executing this command sequence will permanently delete the entire Kali NetHunter filesystem, installed security tools, and configurations from your Android storage.
-
-To cleanly remove NetHunter and restore Termux to its initial state without residue:
+This protocol removes the entire Kali NetHunter rootfs filesystem, security toolkits, and custom execution binaries from the storage partition, restoring the Termux environment to its original state.
 
 ```bash
-# 1. Terminate all active X11 graphics and chroot processes
+# Terminate all active graphics and chroot processes
 pkill -9 -f termux-x11 ; pkill -9 -f xfce4
 
-# 2. Revoke write permissions and delete NetHunter rootfs directories
+# Revoke write protections and remove rootfs directories
 chmod -R 777 kali-* 2>/dev/null
 rm -rf kali-* install-nethunter-termux
 
-# 3. Remove custom launcher binaries and symlinks
+# Remove generated launcher scripts and NetHunter symlinks
 rm -f $PREFIX/bin/start-kali
 rm -f $PREFIX/bin/nh$PREFIX/bin/nethunter
 
