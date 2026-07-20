@@ -3,11 +3,11 @@
 </h1>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Kali_Linux-c6a0f6?style=for-the-badge&logo=kalilinux&logoColor=24273a&labelColor=363a4f" alt="Kali Linux" />
-  <img src="https://img.shields.io/badge/Android-a6da95?style=for-the-badge&logo=android&logoColor=24273a&labelColor=363a4f" alt="Android Platform" />
-  <img src="https://img.shields.io/badge/XFCE4_Desktop-f5a97f?style=for-the-badge&logo=xfce&logoColor=24273a&labelColor=363a4f" alt="XFCE4 GUI" />
-  <img src="https://img.shields.io/badge/Linux_Env-8aadf4?style=for-the-badge&logo=linux&logoColor=24273a&labelColor=363a4f" alt="Linux Environment" />
-  <img src="https://img.shields.io/badge/Bash_Script-ed8796?style=for-the-badge&logo=gnu-bash&logoColor=24273a&labelColor=363a4f" alt="Bash" />
+  <img src="https://img.shields.io/badge/Kali_Linux-c6a0f6?style=for-the-badge&logo=kalilinux&logoColor=white&labelColor=24273a" alt="Kali Linux" />
+  <img src="https://img.shields.io/badge/Android-a6da95?style=for-the-badge&logo=android&logoColor=white&labelColor=24273a" alt="Android Platform" />
+  <img src="https://img.shields.io/badge/XFCE4_Desktop-f5a97f?style=for-the-badge&logo=xfce&logoColor=white&labelColor=24273a" alt="XFCE4 GUI" />
+  <img src="https://img.shields.io/badge/Linux_Env-8aadf4?style=for-the-badge&logo=linux&logoColor=white&labelColor=24273a" alt="Linux Environment" />
+  <img src="https://img.shields.io/badge/Bash_Script-ed8796?style=for-the-badge&logo=gnu-bash&logoColor=white&labelColor=24273a" alt="Bash" />
 </p>
 
 <p align="center">
@@ -16,22 +16,22 @@
 
 ---
 
-## ![0](https://img.shields.io/badge/0.-c6a0f6?style=for-the-badge&logo=linux&logoColor=24273a) Core Dependencies & Architecture
+## 🟣 0. Core Dependencies & Architecture
 
-> Ensure the environment meets the required architecture standards. Do not utilize Google Play Store builds, as they contain deprecated API configurations.
+Before initiating the deployment protocol, ensure the environment meets the required architecture standards. Do not utilize Google Play Store builds, as they contain deprecated API configurations.
 
 <p align="left">
   <a href="https://github.com/termux/termux-app/releases/latest">
-    <img src="https://img.shields.io/badge/1._TERMUX_APP-(F--Droid_Release)-8aadf4?style=for-the-badge&logo=termux&logoColor=24273a&labelColor=363a4f" alt="Termux App" />
+    <img src="https://img.shields.io/badge/1._TERMUX_APP-(F--Droid_Release)-8aadf4?style=for-the-badge&logo=termux&logoColor=white&labelColor=363a4f" alt="Termux App" />
   </a>
   <a href="https://github.com/termux/termux-x11/releases/latest">
-    <img src="https://img.shields.io/badge/2._TERMUX--X11-(Nightly_Build)-c6a0f6?style=for-the-badge&logo=xorg&logoColor=24273a&labelColor=363a4f" alt="Termux X11" />
+    <img src="https://img.shields.io/badge/2._TERMUX--X11-(Nightly_Build)-c6a0f6?style=for-the-badge&logo=xorg&logoColor=white&labelColor=363a4f" alt="Termux X11" />
   </a>
 </p>
 
 ---
 
-## ![1](https://img.shields.io/badge/1.-8aadf4?style=for-the-badge&logo=android&logoColor=24273a) Environment Preparation & Process Limit Bypass
+## 🟢 1. Environment Preparation & Process Limit Bypass
 
 > Update core package lists and install essential dependencies for networking, repository management, and X11 rendering.
 ```bash
@@ -49,7 +49,7 @@ su -c "device_config put activity_manager max_phantom_processes 2147483647 && se
 
 ---
 
-##  Automated NetHunter Deployment
+## 🟠 2. Automated NetHunter Deployment
 
 > Fetch, assign execution permissions, and initialize the official Offensive Security NetHunter installer script.
 
@@ -69,7 +69,7 @@ chmod +x install-nethunter-termux
 
 ---
 
-##  Internal Chroot Configuration & Security Patching
+## 🔵 3. Internal Chroot Configuration & Security Patching
 
 > Mount and enter the newly deployed Kali Linux rootfs environment.
 
@@ -150,7 +150,7 @@ apt install pulseaudio xfce4-terminal -y
 
 ---
 
-##  Server Initialization & Sandbox Optimization
+## 🔸 4. Server Initialization & Sandbox Optimization
 
 > Initialize the Termux X11 server instance listening on a local TCP socket in the background.
 
@@ -179,7 +179,7 @@ chmod +x /usr/bin/bwrap
 
 ```
 
-> Deploy the definitive, intelligent `bwrap` interceptor script to seamlessly filter kernel capability arguments, ensuring flawless execution of complex GUI applications.
+> Deploy the definitive, intelligent `bwrap` interceptor script to seamlessly filter kernel capability arguments, ensuring flawless execution of complex GUI applications like Chromium.
 
 ```bash
 cat << 'EOF' > /usr/bin/bwrap
@@ -228,7 +228,7 @@ exit
 
 ---
 
-##  System Execution Protocol
+## 🔸 5. System Execution Protocol
 
 > Purge any hanging X11, DBus, or desktop processes from memory before launching a new session.
 
@@ -253,7 +253,9 @@ dbus-launch --exit-with-session env DISPLAY=127.0.0.1:1 GALLIUM_DRIVER=llvmpipe 
 
 ---
 
-##  Theming & Toolkit Meta-Packages
+## 🔸 6. Theming & Toolkit Meta-Packages
+
+*(Note: These can be executed inside the running Kali terminal to finalize the environment)*
 
 > Deploy official Kali Linux aesthetics, icon sets, and wallpapers.
 
@@ -288,9 +290,5 @@ apt install kali-tools-vulnerability-analysis -y
 
 ```bash
 apt install kali-tools-information-gathering -y
-
-```
-
-```
 
 ```
