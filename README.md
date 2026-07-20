@@ -1,7 +1,33 @@
+<h1 align="center">
+  Kali Linux XFCE4 Desktop Environment for Android
+</h1>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/OS-Kali%20NetHunter-c6a0f6?style=for-the-badge&logo=kalilinux&logoColor=363a4f&labelColor=363a4f" alt="Kali Linux" />
+  <img src="https://img.shields.io/badge/Platform-Android%20%7C%20Termux-8aadf4?style=for-the-badge&logo=android&logoColor=363a4f&labelColor=363a4f" alt="Android Platform" />
+  <img src="https://img.shields.io/badge/GUI-XFCE4%20Desktop-a6da95?style=for-the-badge&logo=xfce&logoColor=363a4f&labelColor=363a4f" alt="XFCE4 GUI" />
+  <img src="https://img.shields.io/badge/Theme-Catppuccin%20Macchiato-f5a97f?style=for-the-badge&labelColor=363a4f" alt="Catppuccin Theme" />
+  <img src="https://img.shields.io/badge/Shell-Bash%20Scripting-ed8796?style=for-the-badge&logo=gnu-bash&logoColor=363a4f&labelColor=363a4f" alt="Bash" />
+</p>
+
+<p align="center">
+  An advanced, automated deployment framework for executing a hardware-accelerated <strong>Kali Linux XFCE4 Graphical Desktop</strong> natively on Android via <strong>Termux-X11</strong>. Engineered with kernel-level phantom process limit bypasses, systemd constraints patching, and an intelligent Bubblewrap (<code>bwrap</code>) sandbox wrapper for flawless application execution.
+</p>
+
+---
 
 ## 0. Core Dependencies & Architecture
 
 Before initiating the deployment protocol, ensure the environment meets the required architecture standards. Do not utilize Google Play Store builds, as they contain deprecated API configurations.
+
+<p align="left">
+  <a href="https://github.com/termux/termux-app/releases/latest">
+    <img src="https://img.shields.io/badge/1._TERMUX_APP-(F--Droid_Release)-8aadf4?style=for-the-badge&logo=termux&logoColor=363a4f&labelColor=363a4f" alt="Termux App" />
+  </a>
+  <a href="https://github.com/termux/termux-x11/releases/latest">
+    <img src="https://img.shields.io/badge/2._TERMUX--X11-(Nightly_Build)-c6a0f6?style=for-the-badge&logo=xorg&logoColor=363a4f&labelColor=363a4f" alt="Termux X11" />
+  </a>
+</p>
 
 ---
 
@@ -25,7 +51,7 @@ su -c "device_config put activity_manager max_phantom_processes 2147483647 && se
 Fetch and execute the official Offensive Security NetHunter installer. During the interactive setup phase, input **Option `2**` to deploy the complete rootfs package.
 
 ```bash
-wget -O install-nethunter-termux https://offs.ec/2MceZWr
+wget -O install-nethunter-termux [https://offs.ec/2MceZWr](https://offs.ec/2MceZWr)
 chmod +x install-nethunter-termux
 ./install-nethunter-termux
 
@@ -156,10 +182,12 @@ rm -rf kali-* install-nethunter-termux
 
 # Remove generated launcher scripts and NetHunter symlinks
 rm -f $PREFIX/bin/start-kali
-rm -f $PREFIX/bin/nh $PREFIX/bin/nethunter
+rm -f $PREFIX/bin/nh$PREFIX/bin/nethunter
 
 echo -e "\033[0;32m[+] Kali Linux filesystem and custom binaries successfully removed.\033[0m"
 
 ```
 
----
+```
+
+```
