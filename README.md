@@ -22,23 +22,3 @@
 
 ```bash
 curl -sL [https://raw.githubusercontent.com/ETF-Devb/Kali-Linux-Android-Desktop/refs/heads/main/setup_kali_pro.sh](https://raw.githubusercontent.com/ETF-Devb/Kali-Linux-Android-Desktop/refs/heads/main/setup_kali_pro.sh) | bash
-
-```
-
-> **Action Required:** During the automated process, the NetHunter interactive prompt will appear. Enter option **`2`** and press `Enter` to download the minimal rootfs. The script will handle everything else autonomously.
-
----
-
-##  Launching The GUI
-
-> Once the installation is fully complete, spin up your newly configured desktop environment by following these two steps:
-
-1. Open the **Termux-X11** application and leave it running in the background.
-2. Return to your Termux terminal and execute the generated launcher:
-
-```bash
-./start-gui.sh
-
-```
-
-```
