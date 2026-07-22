@@ -21,7 +21,7 @@
 > Execute this single command in your Termux terminal. It will securely fetch and execute the master deployment script directly from the ETF-Devb repository.
 
 ```bash
-curl -sL [https://raw.githubusercontent.com/ETF-Devb/Kali-Linux-Android-Desktop/refs/heads/main/setup_kali_pro.sh](https://raw.githubusercontent.com/ETF-Devb/Kali-Linux-Android-Desktop/refs/heads/main/setup_kali_pro.sh) | bash
+curl -sL https://raw.githubusercontent.com/ETF-Devb/Kali-Linux-Android-Desktop/refs/heads/main/setup_kali_pro.sh | bash
 
 ```
 
