@@ -40,7 +40,3 @@ curl -sL [https://raw.githubusercontent.com/ETF-Devb/Kali-Linux-Android-Desktop/
 ./start-gui.sh
 
 ```
-
-```
-
-```
