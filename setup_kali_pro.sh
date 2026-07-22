@@ -18,6 +18,7 @@ C_YELLOW='\033[1;33m'
 B_SYS="${C_CYAN}${C_BOLD}[SYSTEM]${C_RESET}"
 B_NET="${C_BLUE}${C_BOLD}[NETWORK]${C_RESET}"
 B_GUI="${C_PURPLE}${C_BOLD}[DESKTOP]${C_RESET}"
+B_TOOL="${C_YELLOW}${C_BOLD}[TOOLKIT]${C_RESET}"
 B_OK="${C_GREEN}${C_BOLD}[SUCCESS]${C_RESET}"
 B_WARN="${C_YELLOW}${C_BOLD}[ACTION]${C_RESET}"
 
@@ -35,13 +36,13 @@ echo -e "${C_CYAN} Automated GUI & Toolkit Framework - Engineered by ETF-Devb${C
 echo "=================================================================="
 
 # 1. Update Termux Host Packages
-echo -e "\n${B_SYS} Step 1/5: Preparing Termux Host Environment..."
+echo -e "\n${B_SYS} Step 1/6: Preparing Termux Host Environment..."
 pkg update -y
 pkg upgrade -y
 pkg install -y wget curl root-repo x11-repo termux-x11-nightly pulseaudio
 
 # 2. Download NetHunter Deployer
-echo -e "\n${B_NET} Step 2/5: Fetching Official NetHunter Script..."
+echo -e "\n${B_NET} Step 2/6: Fetching Official NetHunter Script..."
 wget -O install-nethunter-termux https://offs.ec/2MceZWr
 chmod +x install-nethunter-termux
 
@@ -52,8 +53,8 @@ read -p "Press [ENTER] to launch NetHunter Installer..."
 
 ./install-nethunter-termux
 
-# 3. Inject Anti-Freeze Patches, GUI & Toolkits inside NetHunter
-echo -e "\n${B_GUI} Step 3/5: Injecting Anti-Freeze Patches, XFCE & Meta-Packages..."
+# 3. Inject Anti-Freeze Patches & GUI inside NetHunter
+echo -e "\n${B_GUI} Step 3/6: Injecting Anti-Freeze Patches & Core XFCE Desktop..."
 nh -r bash << 'INSIDE_KALI'
 set -e
 
@@ -76,19 +77,13 @@ dpkg --configure -a || true
 apt update
 apt --fix-broken install -y
 
-# E. Deploy Desktop Environment, Themes, and Toolkit Meta-Packages
+# E. Deploy Core Desktop Environment
 DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends \
     xfce4 \
     xfce4-terminal \
     xfce4-whiskermenu-plugin \
     dbus-x11 \
-    pulseaudio \
-    kali-themes \
-    kali-wallpapers \
-    kali-menu \
-    kali-tools-top10 \
-    kali-tools-vulnerability-analysis \
-    kali-tools-information-gathering
+    pulseaudio
 
 # F. Smart Bubblewrap (bwrap) Sandbox Interceptor
 rm -f /usr/bin/bwrap
@@ -113,6 +108,25 @@ done
 BWRAP
 chmod +x /usr/bin/bwrap
 
+# 4. Smart Deployment of Toolkits & Theming
+echo -e "\n${B_TOOL} Step 4/6: Deploying Advanced Toolkits & Aesthetics..."
+
+echo -e "${C_CYAN}[+] Installing Kali Themes & Wallpapers...${C_RESET}"
+DEBIAN_FRONTEND=noninteractive apt install -y kali-themes kali-wallpapers
+
+echo -e "${C_CYAN}[+] Updating Repositories & Installing Kali Menu...${C_RESET}"
+apt update -y
+DEBIAN_FRONTEND=noninteractive apt install -y kali-menu
+
+echo -e "${C_CYAN}[+] Installing Top 10 Security Auditing Tools...${C_RESET}"
+DEBIAN_FRONTEND=noninteractive apt install -y kali-tools-top10
+
+echo -e "${C_CYAN}[+] Installing Vulnerability Analysis Suite...${C_RESET}"
+DEBIAN_FRONTEND=noninteractive apt install -y kali-tools-vulnerability-analysis
+
+echo -e "${C_CYAN}[+] Installing Information Gathering Toolkit...${C_RESET}"
+DEBIAN_FRONTEND=noninteractive apt install -y kali-tools-information-gathering
+
 # G. Automate Kali-Dark & Accent Preferences
 dbus-launch bash -c "
     xfconf-query -c xsettings -p /Net/ThemeName -s 'Kali-Dark' --create -t string
@@ -121,8 +135,8 @@ dbus-launch bash -c "
 " || true
 INSIDE_KALI
 
-# 4. Generate Launcher Script
-echo -e "\n${B_SYS} Step 4/5: Generating Desktop Launcher (start-gui.sh)..."
+# 5. Generate Launcher Script
+echo -e "\n${B_SYS} Step 5/6: Generating Desktop Launcher (start-gui.sh)..."
 cat << 'LAUNCHER' > start-gui.sh
 #!/bin/bash
 C_GREEN='\033[1;32m'
@@ -139,6 +153,6 @@ nh -r dbus-launch --exit-with-session env DISPLAY=127.0.0.1:1 GALLIUM_DRIVER=llv
 LAUNCHER
 chmod +x start-gui.sh
 
-# 5. Finished
-echo -e "\n${B_OK} Step 5/5: INSTALLATION COMPLETED SUCCESSFULLY!"
+# 6. Finished
+echo -e "\n${B_OK} Step 6/6: INSTALLATION COMPLETED SUCCESSFULLY!"
 echo -e "Launch Desktop anytime using: ${C_GREEN}${C_BOLD}./start-gui.sh${C_RESET}\n"
