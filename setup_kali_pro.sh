@@ -5,14 +5,14 @@
 # ==============================================================================
 set -e
 
-# --- ANSI Colors ---
+# --- Catppuccin Mocha Colors (TrueColor) ---
 C_RESET='\033[0m'
 C_BOLD='\033[1m'
-C_CYAN='\033[1;36m'
-C_GREEN='\033[1;32m'
-C_BLUE='\033[1;34m'
-C_PURPLE='\033[1;35m'
-C_YELLOW='\033[1;33m'
+C_CYAN='\033[38;2;148;226;213m'   # Teal
+C_GREEN='\033[38;2;166;227;161m'  # Green
+C_BLUE='\033[38;2;137;180;250m'   # Blue
+C_PURPLE='\033[38;2;203;166;247m' # Mauve
+C_YELLOW='\033[38;2;249;226;175m' # Yellow
 
 # --- Output Badges ---
 B_SYS="${C_CYAN}${C_BOLD}[SYSTEM]${C_RESET}"
@@ -23,17 +23,10 @@ B_OK="${C_GREEN}${C_BOLD}[SUCCESS]${C_RESET}"
 B_WARN="${C_YELLOW}${C_BOLD}[ACTION]${C_RESET}"
 
 clear
-echo -e "${C_PURPLE}${C_BOLD}"
-echo " ███████╗████████╗███████╗      ██████╗ ███████╗██╗   ██╗██████╗ "
-echo " ██╔════╝╚══██╔══╝██╔════╝      ██╔══██╗██╔════╝██║   ██║██╔══██╗"
-echo " █████╗     ██║   █████╗  █████╗██║  ██║█████╗  ██║   ██║██████╔╝"
-echo " ██╔══╝     ██║   ██╔══╝  ╚════╝██║  ██║██╔══╝  ╚██╗ ██╔╝██╔══██╗"
-echo " ███████╗   ██║   ██║           ██████╔╝███████╗ ╚████╔╝ ██████╔╝"
-echo " ╚══════╝   ╚═╝   ╚═╝           ╚═════╝ ╚══════╝  ╚═══╝  ╚═════╝ "
-echo -e "${C_RESET}"
-echo -e "${C_CYAN}${C_BOLD} KALI LINUX XFCE DEPLOYER | ENTERPRISE ANTI-FREEZE EDITION${C_RESET}"
-echo -e "${C_CYAN} Automated GUI & Toolkit Framework - Engineered by ETF-Devb${C_RESET}"
-echo "=================================================================="
+echo -e "${C_PURPLE}${C_BOLD}==================================================================${C_RESET}"
+echo -e "  ${C_BLUE}${C_BOLD}KALI LINUX XFCE DEPLOYER${C_RESET} | ${C_CYAN}ENTERPRISE ANTI-FREEZE EDITION${C_RESET}"
+echo -e "  ${C_YELLOW}Automated GUI & Toolkit Framework - Engineered by ETF-Devb${C_RESET}"
+echo -e "${C_PURPLE}${C_BOLD}==================================================================${C_RESET}"
 
 # 1. Update Termux Host Packages
 echo -e "\n${B_SYS} Step 1/6: Preparing Termux Host Environment..."
@@ -58,8 +51,9 @@ echo -e "\n${B_GUI} Step 3/6: Injecting Anti-Freeze Patches & Core XFCE Desktop.
 nh -r bash << 'INSIDE_KALI'
 set -e
 
-# A. DNS Resolution Fix
-echo "nameserver 8.8.8.8" > /etc/resolv.conf
+# A. DNS Resolution Fix (Bypass Read-Only restriction gracefully)
+rm -f /etc/resolv.conf 2>/dev/null || true
+echo "nameserver 8.8.8.8" > /etc/resolv.conf 2>/dev/null || true
 
 # B. Prevent Systemd Postinst Failures
 mkdir -p /var/lib/dpkg/info
@@ -139,7 +133,7 @@ INSIDE_KALI
 echo -e "\n${B_SYS} Step 5/6: Generating Desktop Launcher (start-gui.sh)..."
 cat << 'LAUNCHER' > start-gui.sh
 #!/bin/bash
-C_GREEN='\033[1;32m'
+C_GREEN='\033[38;2;166;227;161m'
 C_RESET='\033[0m'
 
 pkill -f termux-x11 || true
