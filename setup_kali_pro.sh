@@ -105,9 +105,10 @@ chmod +x /usr/bin/bwrap
 # 4. Smart Deployment of Toolkits & Aesthetics (Fixed & Hardened)
 echo -e "\n\033[38;2;249;226;175m\033[1m[TOOLKIT]\033[0m Step 4/6: Deploying Advanced Toolkits & Aesthetics..."
 
-# Fix missing wallpaper directories
+# Fix missing wallpaper directories & install networking tools
 mkdir -p /usr/share/images/desktop-base
 mkdir -p /usr/share/backgrounds
+DEBIAN_FRONTEND=noninteractive apt install -y wget curl || true
 
 echo -e "[+] Installing Kali Themes, Icons & Menus..."
 DEBIAN_FRONTEND=noninteractive apt install -y kali-themes kali-defaults kali-menu desktop-base gtk2-engines-pixbuf || true
@@ -117,7 +118,8 @@ DEBIAN_FRONTEND=noninteractive apt install -y kali-wallpapers-all || true
 wget -qO /usr/share/images/desktop-base/kali-wallpaper.png https://raw.githubusercontent.com/KaliLinux/kali-wallpapers/main/src/kali-dark-16x9.png || true
 
 echo -e "[+] Installing Security Auditing & Vulnerability Tools..."
-DEBIAN_FRONTEND=noninteractive apt install -y kali-tools-top10 kali-tools-vulnerability-analysis kali-tools-information-gathering || true
+# Fixed the package name from kali-tools-vulnerability-analysis to kali-tools-vulnerability
+DEBIAN_FRONTEND=noninteractive apt install -y kali-tools-top10 kali-tools-vulnerability kali-tools-information-gathering || true
 
 # G. Automate Kali-Dark & Accent Preferences Formally
 dbus-launch bash -c "
@@ -144,4 +146,4 @@ chmod +x start-gui.sh
 
 # 6. Finished
 echo -e "\n${B_OK} Step 6/6: INSTALLATION COMPLETED SUCCESSFULLY!"
-echo -e "Launch Desktop anytime using: ${C_GREEN}${C_BOLD}./start-gui.sh${C_RESET}\n"
+echo -e "Launch Desktop anytime using: \033[38;2;166;227;161m\033[1m./start-gui.sh\033[0m\n"
