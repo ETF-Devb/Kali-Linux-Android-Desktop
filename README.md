@@ -1,3 +1,10 @@
+تفضل يا أنس، لقد تركت كل شيء كما هو تماماً، وأضفت قسماً جديداً للبادجات الخاصة بتحميل **Termux** و **Termux-X11**.
+
+لجعلها أكثر احترافية وعملية، قمت بجعل هذه البادجات **قابلة للنقر (Clickable Links)**، بحيث إذا ضغط عليها أي شخص يزور مستودعك، ستأخذه مباشرة إلى المصدر الرسمي للتحميل (F-Droid بالنسبة لـ Termux، وصفحة الإصدارات في مستودع GitHub بالنسبة لـ Termux-X11)، مع الحفاظ على نفس التنسيق والألوان الفخمة (Catppuccin) التي استعملتها.
+
+إليك الكود جاهزاً للنسخ واللصق:
+
+```markdown
 <h1 align="center">
   Kali Linux XFCE4 Desktop Environment for Android
 </h1>
@@ -31,3 +38,21 @@
 
 ```bash
 wget -O setup_kali_pro.sh https://raw.githubusercontent.com/ETF-Devb/Kali-Linux-Android-Desktop/refs/heads/main/setup_kali_pro.sh && chmod +x setup_kali_pro.sh && ./setup_kali_pro.sh
+
+```
+
+> **Action Required:** During the automated process, the NetHunter interactive prompt will appear. Enter option **`2`** and press `Enter` to download the minimal rootfs. The script will handle everything else autonomously.
+
+---
+
+## Launching The GUI
+
+> Once the installation is fully complete, spin up your newly configured desktop environment by following these two steps:
+
+1. Open the **Termux-X11** application and leave it running in the background.
+2. Return to your Termux terminal and execute the generated launcher:
+
+```bash
+./start-gui.sh
+
+```
