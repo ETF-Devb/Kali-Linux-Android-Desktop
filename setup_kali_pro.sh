@@ -1,7 +1,7 @@
 #!/bin/bash
 # ==============================================================================
-#  KALI LINUX XFCE DEPLOYER (ENTERPRISE / ANTI-FREEZE EDITION)
-#  Engineered for Termux-X11 | High Performance, Full Theming & Toolkits
+#  KALI LINUX XFCE DEPLOYER (MINIMAL / NO-TOOLS / ANTI-FREEZE EDITION)
+#  Engineered for Termux-X11 | GUI Only, No Metasploit, No Heavy Tools
 # ==============================================================================
 set -e
 
@@ -18,14 +18,13 @@ C_YELLOW='\033[38;2;249;226;175m'
 B_SYS="${C_CYAN}${C_BOLD}[SYSTEM]${C_RESET}"
 B_NET="${C_BLUE}${C_BOLD}[NETWORK]${C_RESET}"
 B_GUI="${C_PURPLE}${C_BOLD}[DESKTOP]${C_RESET}"
-B_TOOL="${C_YELLOW}${C_BOLD}[TOOLKIT]${C_RESET}"
 B_OK="${C_GREEN}${C_BOLD}[SUCCESS]${C_RESET}"
 B_WARN="${C_YELLOW}${C_BOLD}[ACTION]${C_RESET}"
 
 clear
 echo -e "${C_PURPLE}${C_BOLD}==================================================================${C_RESET}"
-echo -e "  ${C_BLUE}${C_BOLD}KALI LINUX XFCE DEPLOYER${C_RESET} | ${C_CYAN}ENTERPRISE ANTI-FREEZE EDITION${C_RESET}"
-echo -e "  ${C_YELLOW}Automated GUI, Toolkits & Full Theming Framework${C_RESET}"
+echo -e "  ${C_BLUE}${C_BOLD}KALI LINUX XFCE DEPLOYER${C_RESET} | ${C_CYAN}MINIMAL GUI EDITION${C_RESET}"
+echo -e "  ${C_YELLOW}Automated GUI, Full Theming, NO HACKING TOOLS${C_RESET}"
 echo -e "${C_PURPLE}${C_BOLD}==================================================================${C_RESET}"
 
 # 1. Update Termux Host Packages
@@ -60,18 +59,24 @@ mkdir -p /var/lib/dpkg/info
 echo -e "#!/bin/sh\nexit 0" > /var/lib/dpkg/info/systemd.postinst
 chmod +x /var/lib/dpkg/info/systemd.postinst
 
-# C. Anti-Freeze: Bypass initramfs-tools & Neutralize Hanging DPKG Triggers
+# C. Anti-Freeze: Bypass initramfs-tools & man-db (Fixing the 88% hang)
 echo -e "#!/bin/sh\nexit 0" > /usr/sbin/update-initramfs
 chmod +x /usr/sbin/update-initramfs
 rm -f /var/lib/dpkg/info/initramfs-tools.triggers
 rm -f /var/lib/dpkg/info/libgdk-pixbuf*.triggers
+
+# --- FIXING THE MAN-DB HANG ---
+# This prevents the system from trying to build the manual pages database
+rm -f /var/lib/dpkg/info/man-db.triggers 2>/dev/null || true
+echo -e "#!/bin/sh\nexit 0" > /usr/bin/mandb
+chmod +x /usr/bin/mandb
 
 # D. Package Manager Fixes
 dpkg --configure -a || true
 apt update
 apt --fix-broken install -y
 
-# E. Deploy Core Desktop Environment
+# E. Deploy Core Desktop Environment (GUI ONLY)
 DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends \
     xfce4 \
     xfce4-terminal \
@@ -102,10 +107,10 @@ done
 BWRAP
 chmod +x /usr/bin/bwrap
 
-# 4. Smart Deployment of Toolkits & Aesthetics (Fixed & Hardened)
-echo -e "\n\033[38;2;249;226;175m\033[1m[TOOLKIT]\033[0m Step 4/6: Deploying Advanced Toolkits & Aesthetics..."
+# 4. Smart Deployment of Aesthetics (No Hacking Tools)
+echo -e "\n\033[38;2;249;226;175m\033[1m[AESTHETICS]\033[0m Step 4/6: Deploying Kali Themes & Visuals..."
 
-# Fix missing wallpaper directories & install networking tools
+# Fix missing wallpaper directories
 mkdir -p /usr/share/images/desktop-base
 mkdir -p /usr/share/backgrounds
 DEBIAN_FRONTEND=noninteractive apt install -y wget curl || true
@@ -113,13 +118,9 @@ DEBIAN_FRONTEND=noninteractive apt install -y wget curl || true
 echo -e "[+] Installing Kali Themes, Icons & Menus..."
 DEBIAN_FRONTEND=noninteractive apt install -y kali-themes kali-defaults kali-menu desktop-base gtk2-engines-pixbuf || true
 
-echo -e "[+] Securing Kali Wallpapers (Fallback Supported)..."
+echo -e "[+] Securing Kali Wallpapers..."
 DEBIAN_FRONTEND=noninteractive apt install -y kali-wallpapers-all || true
 wget -qO /usr/share/images/desktop-base/kali-wallpaper.png https://raw.githubusercontent.com/KaliLinux/kali-wallpapers/main/src/kali-dark-16x9.png || true
-
-echo -e "[+] Installing Security Auditing & Vulnerability Tools..."
-# Fixed the package name from kali-tools-vulnerability-analysis to kali-tools-vulnerability
-DEBIAN_FRONTEND=noninteractive apt install -y kali-tools-top10 kali-tools-vulnerability kali-tools-information-gathering || true
 
 # G. Automate Kali-Dark & Accent Preferences Formally
 dbus-launch bash -c "
