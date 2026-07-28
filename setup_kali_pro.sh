@@ -1,6 +1,6 @@
 #!/bin/bash
 # ==============================================================================
-#  KALI LINUX XFCE DEPLOYER (MINIMAL / ANTI-FREEZE / GITHUB EDITION)
+#  KALI LINUX XFCE DEPLOYER (FIXED & OPTIMIZED EDITION)
 #  Engineered for Termux-X11 | GUI Only, No Metasploit, 1 Wallpaper
 # ==============================================================================
 set -e
@@ -62,8 +62,11 @@ dpkg --configure -a || true
 apt update
 apt --fix-broken install -y
 
-# E. Deploy Core Desktop, Kali Menu, Themes & 2 Light Tools (mousepad, htop)
+# E. Deploy Core Desktop, Kali Menu, Themes & Required Tools (INCLUDES WGET/CURL FIX)
 DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends \
+    wget \
+    curl \
+    ca-certificates \
     xfce4 \
     xfce4-terminal \
     xfce4-whiskermenu-plugin \
@@ -100,12 +103,14 @@ done
 BWRAP
 chmod +x /usr/bin/bwrap
 
-# G. Single Famous Kali Wallpaper Download (Avoiding heavy deb packages)
+# G. Single Famous Kali Wallpaper Download
 mkdir -p /usr/share/images/desktop-base
 wget -qO /usr/share/images/desktop-base/kali-wallpaper.png https://raw.githubusercontent.com/KaliLinux/kali-wallpapers/main/src/kali-dark-16x9.png || true
 ln -sf /usr/share/images/desktop-base/kali-wallpaper.png /etc/alternatives/desktop-background || true
 
-# H. Automate Kali-Dark Theme Preferences
+# H. Automate Kali-Dark Theme Preferences (With D-Bus daemon active)
+mkdir -p /var/run/dbus /run/dbus
+dbus-daemon --system --fork 2>/dev/null || true
 dbus-launch bash -c "
     xfconf-query -c xsettings -p /Net/ThemeName -s 'Kali-Dark' --create -t string || true
     xfconf-query -c xsettings -p /Net/IconThemeName -s 'Kali-Dark' --create -t string || true
