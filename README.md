@@ -46,7 +46,7 @@ wget -O setup_kali_pro.sh https://raw.githubusercontent.com/ETF-Devb/Kali-Linux-
 2. Return to your Termux terminal and execute the generated launcher:
 
 ```bash
-cd ~
 ./setup_kali_pro.sh
+
 
 ```
