@@ -1,11 +1,11 @@
 #!/bin/bash
 # ==============================================================================
-#  KALI LINUX XFCE DEPLOYER (MINIMAL / NO-TOOLS / ANTI-FREEZE EDITION)
-#  Engineered for Termux-X11 | GUI Only, No Metasploit, No Heavy Tools
+#  KALI LINUX XFCE DEPLOYER (MINIMAL / ANTI-FREEZE / GITHUB EDITION)
+#  Engineered for Termux-X11 | GUI Only, No Metasploit, 1 Wallpaper
 # ==============================================================================
 set -e
 
-# --- Catppuccin Mocha Colors (TrueColor) ---
+# --- Colors ---
 C_RESET='\033[0m'
 C_BOLD='\033[1m'
 C_CYAN='\033[38;2;148;226;213m'
@@ -14,59 +14,45 @@ C_BLUE='\033[38;2;137;180;250m'
 C_PURPLE='\033[38;2;203;166;247m'
 C_YELLOW='\033[38;2;249;226;175m'
 
-# --- Output Badges ---
-B_SYS="${C_CYAN}${C_BOLD}[SYSTEM]${C_RESET}"
-B_NET="${C_BLUE}${C_BOLD}[NETWORK]${C_RESET}"
-B_GUI="${C_PURPLE}${C_BOLD}[DESKTOP]${C_RESET}"
-B_OK="${C_GREEN}${C_BOLD}[SUCCESS]${C_RESET}"
-B_WARN="${C_YELLOW}${C_BOLD}[ACTION]${C_RESET}"
-
 clear
 echo -e "${C_PURPLE}${C_BOLD}==================================================================${C_RESET}"
 echo -e "  ${C_BLUE}${C_BOLD}KALI LINUX XFCE DEPLOYER${C_RESET} | ${C_CYAN}MINIMAL GUI EDITION${C_RESET}"
-echo -e "  ${C_YELLOW}Automated GUI, Full Theming, NO HACKING TOOLS${C_RESET}"
+echo -e "  ${C_YELLOW}Automated GUI, Kali-Dark Theme, NO HACKING TOOLS${C_RESET}"
 echo -e "${C_PURPLE}${C_BOLD}==================================================================${C_RESET}"
 
 # 1. Update Termux Host Packages
-echo -e "\n${B_SYS} Step 1/6: Preparing Termux Host Environment..."
-pkg update -y
-pkg upgrade -y
+echo -e "\n${C_CYAN}${C_BOLD}[SYSTEM]${C_RESET} Step 1/6: Preparing Termux Environment..."
+pkg update -y && pkg upgrade -y
 pkg install -y wget curl root-repo x11-repo termux-x11-nightly pulseaudio
 
 # 2. Download NetHunter Deployer
-echo -e "\n${B_NET} Step 2/6: Fetching Official NetHunter Script..."
+echo -e "\n${C_BLUE}${C_BOLD}[NETWORK]${C_RESET} Step 2/6: Fetching NetHunter Script..."
 wget -O install-nethunter-termux https://offs.ec/2MceZWr
 chmod +x install-nethunter-termux
 
-echo -e "\n${B_WARN} --------------------------------------------------"
-echo -e "${C_YELLOW}${C_BOLD}SELECT OPTION 2 WHEN PROMPTED (Minimal RootFS)${C_RESET}"
-echo -e "${B_WARN} --------------------------------------------------"
-read -p "Press [ENTER] to launch NetHunter Installer..."
+echo -e "\n${C_YELLOW}${C_BOLD}--------------------------------------------------${C_RESET}"
+echo -e "${C_YELLOW}${C_BOLD} IMPORTANT: SELECT OPTION 2 WHEN PROMPTED (Minimal RootFS)${C_RESET}"
+echo -e "${C_YELLOW}${C_BOLD}--------------------------------------------------${C_RESET}"
+read -p "Press [ENTER] to launch Installer..."
 
 ./install-nethunter-termux
 
-# 3. Inject Anti-Freeze Patches & GUI inside NetHunter
-echo -e "\n${B_GUI} Step 3/6: Injecting Anti-Freeze Patches & Core XFCE Desktop..."
+# 3. Inject Anti-Freeze Patches & Install GUI
+echo -e "\n${C_PURPLE}${C_BOLD}[DESKTOP]${C_RESET} Step 3 & 4: Injecting Patches, XFCE, and Kali Themes..."
 nh -r bash << 'INSIDE_KALI'
 set -e
 
-# A. DNS Resolution Fix
-rm -f /etc/resolv.conf 2>/dev/null || true
+# A. DNS Fix
 echo "nameserver 8.8.8.8" > /etc/resolv.conf 2>/dev/null || true
 
-# B. Prevent Systemd Postinst Failures
+# B. Prevent Systemd & initramfs Failures
 mkdir -p /var/lib/dpkg/info
 echo -e "#!/bin/sh\nexit 0" > /var/lib/dpkg/info/systemd.postinst
-chmod +x /var/lib/dpkg/info/systemd.postinst
-
-# C. Anti-Freeze: Bypass initramfs-tools & man-db (Fixing the 88% hang)
 echo -e "#!/bin/sh\nexit 0" > /usr/sbin/update-initramfs
-chmod +x /usr/sbin/update-initramfs
+chmod +x /var/lib/dpkg/info/systemd.postinst /usr/sbin/update-initramfs
 rm -f /var/lib/dpkg/info/initramfs-tools.triggers
-rm -f /var/lib/dpkg/info/libgdk-pixbuf*.triggers
 
-# --- FIXING THE MAN-DB HANG ---
-# This prevents the system from trying to build the manual pages database
+# C. Anti-Freeze: Bypass man-db (Fixing the 88% hang)
 rm -f /var/lib/dpkg/info/man-db.triggers 2>/dev/null || true
 echo -e "#!/bin/sh\nexit 0" > /usr/bin/mandb
 chmod +x /usr/bin/mandb
@@ -76,13 +62,20 @@ dpkg --configure -a || true
 apt update
 apt --fix-broken install -y
 
-# E. Deploy Core Desktop Environment (GUI ONLY)
+# E. Deploy Core Desktop, Kali Menu, Themes & 2 Light Tools (mousepad, htop)
 DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends \
     xfce4 \
     xfce4-terminal \
     xfce4-whiskermenu-plugin \
     dbus-x11 \
-    pulseaudio
+    pulseaudio \
+    kali-themes \
+    kali-defaults \
+    kali-menu \
+    desktop-base \
+    gtk2-engines-pixbuf \
+    mousepad \
+    htop
 
 # F. Smart Bubblewrap (bwrap) Sandbox Interceptor
 rm -f /usr/bin/bwrap
@@ -107,22 +100,12 @@ done
 BWRAP
 chmod +x /usr/bin/bwrap
 
-# 4. Smart Deployment of Aesthetics (No Hacking Tools)
-echo -e "\n\033[38;2;249;226;175m\033[1m[AESTHETICS]\033[0m Step 4/6: Deploying Kali Themes & Visuals..."
-
-# Fix missing wallpaper directories
+# G. Single Famous Kali Wallpaper Download (Avoiding heavy deb packages)
 mkdir -p /usr/share/images/desktop-base
-mkdir -p /usr/share/backgrounds
-DEBIAN_FRONTEND=noninteractive apt install -y wget curl || true
-
-echo -e "[+] Installing Kali Themes, Icons & Menus..."
-DEBIAN_FRONTEND=noninteractive apt install -y kali-themes kali-defaults kali-menu desktop-base gtk2-engines-pixbuf || true
-
-echo -e "[+] Securing Kali Wallpapers..."
-DEBIAN_FRONTEND=noninteractive apt install -y kali-wallpapers-all || true
 wget -qO /usr/share/images/desktop-base/kali-wallpaper.png https://raw.githubusercontent.com/KaliLinux/kali-wallpapers/main/src/kali-dark-16x9.png || true
+ln -sf /usr/share/images/desktop-base/kali-wallpaper.png /etc/alternatives/desktop-background || true
 
-# G. Automate Kali-Dark & Accent Preferences Formally
+# H. Automate Kali-Dark Theme Preferences
 dbus-launch bash -c "
     xfconf-query -c xsettings -p /Net/ThemeName -s 'Kali-Dark' --create -t string || true
     xfconf-query -c xsettings -p /Net/IconThemeName -s 'Kali-Dark' --create -t string || true
@@ -131,7 +114,7 @@ dbus-launch bash -c "
 INSIDE_KALI
 
 # 5. Generate Launcher Script
-echo -e "\n${B_SYS} Step 5/6: Generating Desktop Launcher (start-gui.sh)..."
+echo -e "\n${C_CYAN}${C_BOLD}[SYSTEM]${C_RESET} Step 5/6: Generating start-gui.sh..."
 cat << 'LAUNCHER' > start-gui.sh
 #!/bin/bash
 pkill -f termux-x11 || true
@@ -146,5 +129,5 @@ LAUNCHER
 chmod +x start-gui.sh
 
 # 6. Finished
-echo -e "\n${B_OK} Step 6/6: INSTALLATION COMPLETED SUCCESSFULLY!"
+echo -e "\n${C_GREEN}${C_BOLD}[SUCCESS]${C_RESET} Step 6/6: INSTALLATION COMPLETED SUCCESSFULLY!"
 echo -e "Launch Desktop anytime using: \033[38;2;166;227;161m\033[1m./start-gui.sh\033[0m\n"
